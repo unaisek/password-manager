@@ -1,0 +1,68 @@
+<div class="container mx-auto my-16">
+    <h1 class="text-5xl mt-0 mb-5">Password Manager</h1>
+    <p class="mb-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim consectetur odio rerum nobis labore
+         assumenda exercitationem blanditiis debitis aliquam, totam sapiente, nesciunt asperiores voluptatem numquam
+        commodi accusantium eos quibusdam expedita.</p>
+    <button class="mb-5 mx-0.5 px-5 py-3 text-sm shadow-sm text-white bg-gray-900 rounded-md"> Add New Sites</button>
+        
+
+    <div class="px-20 py-10 mb-10 my-5 border-2  border-gray-900">
+        <h2 class="text-center text-3xl">{{formState}} Site</h2>
+        <p class="text-center">You can {{formState}} site from the below form</p>
+
+        <form #f="ngForm" (ngSubmit)="siteSubmit(f.value)">
+            <div class="flex flex-col">
+                <label class="text-lg font-medium mb-2">Site Name</label>
+                <input [(ngModel)]="siteurl" type="text" name="siteName" class="border-2 border-gray-900 p-2 rounded-lg w-full">
+            </div>
+            <div class="flex flex-col">
+                <label class="text-lg font-medium mb-2">Site Url</label>
+                <input [(ngModel)]="siteName" type="text" name="siteUrl" class="border-2 border-gray-900 p-2 rounded-lg w-full">
+            
+            </div>
+            <div class="flex flex-col">
+                <label class="text-lg font-medium mb-2">Site Image Url</label>
+                <input [(ngModel)]="siteImgUrl"  type="text" name="siteImageUrl" class="border-2 border-gray-900 p-2 rounded-lg w-full">
+            
+            </div>
+
+            <button class="mt-10 mx-0.5 px-5 py-3 text-sm bg-gray-900 text-white shadow rounded-md">
+                {{formState}}
+            </button>
+            <button class="mt-10 mx-0.5 px-5 py-3 text-sm border-2 border-gray-900 text-gray-900 shadow rounded-md">
+                Cancel
+            </button>
+        </form>
+
+    </div>
+
+    <div class="grid grid-cols-3 gap-5">
+        <div *ngFor="let site of allsites | async" class="shadow-lg border-2 border-gray-900">
+            <img [src]="site.siteImageUrl" alt="">
+            <h3 class="p-3 text-xl font-bold">{{site?.siteName}}</h3>
+            <div class="w-60 m-3 px-3 bg-blue-200 rounded-lg text-sm">
+                {{site?.siteUrl}}
+            </div>
+
+           <div class="flex justify-between">
+            <button routerLink="/password-list" 
+                [queryParams]="{id:site.id, siteName:site.siteName, siteUrl:site.siteUrl, siteImgUrl:site.siteImageUrl}"
+                class="my-3 ml-3 mx-0.5 px-5 py-3 text-sm bg-gray-900 text-white shadow rounded-md">
+                Add New Password
+            </button>
+            <button 
+            (click)="editSite(site.siteName,site.siteUrl, site.siteImageUrl, site.id)"
+            class="my-3 mx-0.5 px-3 py-3 text-sm border-2 border-gray-900 text-gray-900 shadow rounded-md">
+                Edit
+            </button>
+            <button (click)="deleteSite(site.id)"
+            class="my-3 mx-0.5 px-3 py-3 text-sm border-2 border-gray-900 text-gray-900 shadow rounded-md">
+                Delete
+            </button>
+           </div>
+
+        </div>
+
+    </div>              
+
+</div>
